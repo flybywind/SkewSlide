@@ -1,0 +1,15 @@
+$blue: #93F;
+$opacity: 0.4;
+
+.container {
+	overflow: hidden;
+	margin: 50px auto;
+	width: 800px;
+}
+
+.mask {
+	background-color: $blue;
+	opacity: $opacity;
+
+	transform: rotate(45deg);
+}
