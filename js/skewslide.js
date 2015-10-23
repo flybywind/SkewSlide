@@ -1,7 +1,7 @@
 function toDeg(rad) {
   return rad/Math.PI * 180;
 }
-var DURATION = 2000; //ms
+var DURATION = 1000; //ms
 $(function() {
   var img = $(".container img");
   var img_height = img.height();
@@ -62,8 +62,18 @@ $(function() {
         masks.each(function(){
           var $this = $(this);
           var w = progress * mask_width;
-          if (progress > 1.0) {
+          if (w >= mask_width) {
             $this.width(mask_width);
+            if ($this.hasClass("rt")) {
+              $this.css({
+                right: -mask_width + "px",
+              })
+            }
+            if ($this.hasClass("rb")) {
+              $this.css({
+                right: -mask_width + "px",
+              })
+            }
             return
           }
           $this.width(w);
@@ -99,7 +109,7 @@ $(function() {
         masks.each(function(){
           var $this = $(this);
           var w = (1-progress) * mask_width;
-          if (progress > 1.0) {
+          if (w <= 0) {
             $this.width(0);
             return;
           }
