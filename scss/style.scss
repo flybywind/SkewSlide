@@ -2,14 +2,21 @@ $blue: #93F;
 $opacity: 0.4;
 
 .container {
-	overflow: hidden;
-	margin: 50px auto;
+	//overflow: hidden;
+	margin: 500px auto;
 	width: 800px;
+	position: relative;
+
+	img {
+		width: 100%;
+		z-index: 0;
+	}
 }
 
 .mask {
+	// img是inline-block的，所以mask也要设为inline-block
+	display: inline-block;
 	background-color: $blue;
 	opacity: $opacity;
-
-	transform: rotate(45deg);
+	position: absolute;
 }
