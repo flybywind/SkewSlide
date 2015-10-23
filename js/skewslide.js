@@ -1,3 +1,6 @@
+function toDeg(rad) {
+  return rad/Math.PI * 180;
+}
 $(function() {
   var img = $(".container img");
   var img_height = img.height();
@@ -14,33 +17,52 @@ $(function() {
     var offset = Math.cos(alpha)*img_width;
     masks.each(function() {
       var $this = $(this);
-      $this.height(mask_height)
-           .width(mask_width);
-
+      $this.height(mask_height).width(mask_width);
       if ($this.hasClass("lt")) {
         $this.css({
           top: -offset+"px",
           left: 0,
+          transformOrigin: "0 "+offset+"px",
+          transform: "rotate("+ toDeg(Math.PI/2 - alpha) +"deg)",
         })
       }
       if ($this.hasClass("rt")) {
         $this.css({
           top: (offset - mask_height)+"px",
           right: -mask_width + "px",
+          transformOrigin: "0 "+(mask_height - offset)+"px",
+          transform: "rotate("+ toDeg(Math.PI/2 + alpha) +"deg)",
         })
       }
       if ($this.hasClass("lb")) {
         $this.css({
           bottom: -offset+"px",
           left:0,
+          transformOrigin: "0 "+(mask_height - offset)+"px",
+          transform: "rotate("+ toDeg(alpha - Math.PI/2) +"deg)",
         })
       }
       if ($this.hasClass("rb")) {
         $this.css({
           bottom: (offset - mask_height)+"px",
           right: -mask_width + "px",
+          transformOrigin: "0 "+offset+"px",
+          transform: "rotate("+ toDeg(Math.PI/2*3 - alpha) +"deg)",
         })
       }
+    });
+    /*
+    $(".container").on("mouseenter", function() {
+      var masks = $(this).find(".mask");
+      masks.each(function() {
+        $(this).width(mask_width);
+      })
     })
+    $(".container").on("mouseleave", function() {
+      var masks = $(this).find(".mask");
+      masks.each(function() {
+        $(this).width(0);
+      })
+    })*/
   }
 });
