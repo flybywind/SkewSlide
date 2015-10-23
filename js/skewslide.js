@@ -2,6 +2,7 @@ function toDeg(rad) {
   return rad/Math.PI * 180;
 }
 var DURATION = 1000; //ms
+
 $(function() {
   var img = $(".container img");
   var img_height = img.height();
@@ -16,38 +17,41 @@ $(function() {
     var mask_height = img_height/Math.sin(alpha);
     var mask_width = Math.sin(alpha)*img_width;
     var offset = Math.cos(alpha)*img_width;
+    transformOriginName = Modernizr.prefixed("transformOrigin");
+    transformName = Modernizr.prefixed("transform");
     masks.each(function() {
       var $this = $(this);
       $this.height(mask_height).width(0);
+      var css_obj = {};
       if ($this.hasClass("lt")) {
-        $this.css({
-          top: -offset+"px",
-          transformOrigin: "0 "+offset+"px",
-          transform: "rotate("+ toDeg(Math.PI/2 - alpha) +"deg)",
-        })
+        css_obj = {};
+        css_obj[transformOriginName] = "0 "+offset+"px";
+        css_obj[transformName] = "rotate("+ toDeg(Math.PI/2 - alpha) +"deg)";
+        css_obj.top = -offset+"px";
+        $this.css(css_obj);
       }
       if ($this.hasClass("rt")) {
-        $this.css({
-          top: (offset - mask_height)+"px",
-          right: 0,
-          transformOrigin: "0 "+(mask_height - offset)+"px",
-          transform: "rotate("+ toDeg(Math.PI/2 + alpha) +"deg)",
-        })
+        css_obj = {};
+        css_obj[transformOriginName] = "0 "+(mask_height - offset)+"px";
+        css_obj[transformName] = "rotate("+ toDeg(Math.PI/2 + alpha) +"deg)";
+        css_obj.top = (offset - mask_height)+"px";
+        css_obj.right = 0;
+        $this.css(css_obj);
       }
       if ($this.hasClass("lb")) {
-        $this.css({
-          bottom: -offset+"px",
-          transformOrigin: "0 "+(mask_height - offset)+"px",
-          transform: "rotate("+ toDeg(alpha - Math.PI/2) +"deg)",
-        })
+        css_obj = {};
+        css_obj[transformOriginName] = "0 "+(mask_height - offset)+"px";
+        css_obj[transformName] = "rotate("+ toDeg(alpha - Math.PI/2) +"deg)";
+        css_obj.bottom = -offset+"px";
+        $this.css(css_obj);
       }
       if ($this.hasClass("rb")) {
-        $this.css({
-          bottom: (offset - mask_height)+"px",
-          right: 0,
-          transformOrigin: "0 "+offset+"px",
-          transform: "rotate("+ toDeg(Math.PI/2*3 - alpha) +"deg)",
-        })
+        css_obj = {};
+        css_obj[transformOriginName] = "0 "+offset+"px";
+        css_obj[transformName] = "rotate("+ toDeg(Math.PI/2*3 - alpha) +"deg)";
+        css_obj.bottom = (offset - mask_height)+"px";
+        css_obj.right = 0;
+        $this.css(css_obj);
       }
     });
 
