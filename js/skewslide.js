@@ -1,6 +1,7 @@
 function toDeg(rad) {
   return rad/Math.PI * 180;
 }
+var DURATION = 2000; //ms
 $(function() {
   var img = $(".container img");
   var img_height = img.height();
@@ -28,7 +29,7 @@ $(function() {
       if ($this.hasClass("rt")) {
         $this.css({
           top: (offset - mask_height)+"px",
-          right: -mask_width + "px",
+          right: 0,
           transformOrigin: "0 "+(mask_height - offset)+"px",
           transform: "rotate("+ toDeg(Math.PI/2 + alpha) +"deg)",
         })
@@ -43,7 +44,7 @@ $(function() {
       if ($this.hasClass("rb")) {
         $this.css({
           bottom: (offset - mask_height)+"px",
-          right: -mask_width + "px",
+          right: 0,
           transformOrigin: "0 "+offset+"px",
           transform: "rotate("+ toDeg(Math.PI/2*3 - alpha) +"deg)",
         })
@@ -51,18 +52,77 @@ $(function() {
     });
 
     $(".container").on("mouseenter", function() {
-      var $this = $(this);
-      var masks = $this.find(".mask");
-      masks.each(function() {
-        $(this).width(mask_width);
-      })
+      var masks = $(this).find(".mask");
+      var start_time = null;
+      var call_back = function(t) {
+        if (start_time == null) {
+          start_time = t;
+        }
+        var progress = (t - start_time)/DURATION;
+        masks.each(function(){
+          var $this = $(this);
+          var w = progress * mask_width;
+          if (progress > 1.0) {
+            $this.width(mask_width);
+            return
+          }
+          $this.width(w);
+          if ($this.hasClass("rt")) {
+            $this.css({
+              right: -w + "px",
+            })
+          }
+          if ($this.hasClass("rb")) {
+            $this.css({
+              right: -w + "px",
+            })
+          }
+        })
+        if (progress > 1.0) {
+          cancelAnimationFrame(aid);
+          return;
+        }
+        requestAnimationFrame(call_back);
+      }
+      var aid = requestAnimationFrame(call_back);
     })
     $(".container").on("mouseleave", function() {
-      var $this = $(this);
-      var masks = $this.find(".mask");
-      masks.each(function() {
-        $(this).width(0);
-      })
+      var masks = $(this).find(".mask");
+      var start_time = null;
+      var mask_width = masks.eq(0).width();
+      var call_back = function(t) {
+        if (start_time == null) {
+          start_time = t;
+        }
+        var progress = (t - start_time)/DURATION;
+
+        masks.each(function(){
+          var $this = $(this);
+          var w = (1-progress) * mask_width;
+          if (progress > 1.0) {
+            $this.width(0);
+            return;
+          }
+          $this.width(w);
+          if ($this.hasClass("rt")) {
+            $this.css({
+              right: -w + "px",
+            })
+          }
+          if ($this.hasClass("rb")) {
+            $this.css({
+              right: -w + "px",
+            })
+          }
+        })
+        if (progress > 1.0) {
+          cancelAnimationFrame(aid);
+          return;
+        }
+        requestAnimationFrame(call_back);
+      }
+      var aid = requestAnimationFrame(call_back);
     })
+
   }
 });
