@@ -17,11 +17,10 @@ $(function() {
     var offset = Math.cos(alpha)*img_width;
     masks.each(function() {
       var $this = $(this);
-      $this.height(mask_height).width(mask_width);
+      $this.height(mask_height).width(0);
       if ($this.hasClass("lt")) {
         $this.css({
           top: -offset+"px",
-          left: 0,
           transformOrigin: "0 "+offset+"px",
           transform: "rotate("+ toDeg(Math.PI/2 - alpha) +"deg)",
         })
@@ -37,7 +36,6 @@ $(function() {
       if ($this.hasClass("lb")) {
         $this.css({
           bottom: -offset+"px",
-          left:0,
           transformOrigin: "0 "+(mask_height - offset)+"px",
           transform: "rotate("+ toDeg(alpha - Math.PI/2) +"deg)",
         })
@@ -51,18 +49,20 @@ $(function() {
         })
       }
     });
-    /*
+
     $(".container").on("mouseenter", function() {
-      var masks = $(this).find(".mask");
+      var $this = $(this);
+      var masks = $this.find(".mask");
       masks.each(function() {
         $(this).width(mask_width);
       })
     })
     $(".container").on("mouseleave", function() {
-      var masks = $(this).find(".mask");
+      var $this = $(this);
+      var masks = $this.find(".mask");
       masks.each(function() {
         $(this).width(0);
       })
-    })*/
+    })
   }
 });
