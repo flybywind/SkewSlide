@@ -13,7 +13,8 @@ $opacity: 0.4;
 	}
 }
 
-.mask {
+.mask-high,
+.mask-low {
 	// img是inline-block的，所以mask也要设为inline-block
 	display: inline-block;
 	background-color: $blue;
