@@ -1,12 +1,11 @@
 $blue: #93F;
 $opacity: 0.4;
 
-.container {
+.mask-container {
 	overflow: hidden;
 	margin: 50px auto;
 	width: 900px;
 	position: relative;
-
 	img {
 		width: 100%;
 		z-index: 0;
