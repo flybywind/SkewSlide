@@ -3,8 +3,9 @@ $opacity: 0.4;
 
 .mask-container {
 	overflow: hidden;
-	margin: 50px auto;
-	width: 900px;
+	margin: 50px 10px;
+	width: 500px;
+	float: left;
 	position: relative;
 	img {
 		width: 100%;
@@ -18,5 +19,6 @@ $opacity: 0.4;
 	display: inline-block;
 	background-color: $blue;
 	opacity: $opacity;
+	filter:alpha(opacity=#{$opacity*100});
 	position: absolute;
 }

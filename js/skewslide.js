@@ -46,6 +46,8 @@ $(function() {
 			var masks = $(this).find(".mask-low");
 			masks.each(function() {
 				var $this = $(this);
+				var $parent = $this.parent();
+				var img_height = $parent.height();
 				if ($this.hasClass("above")) {
 					$this.animate({
 						top: -img_height / 2 + "px",
